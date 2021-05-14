@@ -11,7 +11,6 @@ Product.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
@@ -43,7 +42,7 @@ Product.init(
     }
   },
   {
-    sequelize: sequelize,
+    sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,

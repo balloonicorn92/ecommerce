@@ -28,12 +28,18 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    include: [Product, {
+    include: [Category, {
       model: Tag,
       Through: ProductTag
     }]
   })
-  .then(categoryData => res.status(200).json(categoryData))
+  .then(productData => {
+    if(!productData){
+      res.status(400).json({ message: 'No user found with this id'})
+      return
+    }
+    res.status(200).json(productData)
+  })
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
@@ -110,12 +116,28 @@ router.put('/:id', (req, res) => {
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
       // console.log(err);
-      res.status(400).json(err);
+      res.status(400).json({ message: 'No user found with this id'});
     });
 });
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(dbProductData => {
+    if(!dbProductData) {
+      res.status(404).json({ message: 'No user found with this id '})
+      return
+    }
+    res.json(dbProductData)
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 module.exports = router;

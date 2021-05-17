@@ -3,8 +3,7 @@ require('dotenv').config();
 const Sequelize = require('sequelize');
 
 //condition true ? do this : otherwise do this
-const sequelize = process.env.JAWSDB_URL
-  new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PW, {
+  const sequelize = new Sequelize('ecommerce_db', 'root', 'Mysqlpass', {
       host: 'localhost',
       dialect: 'mysql',
       dialectOptions: {
@@ -12,4 +11,4 @@ const sequelize = process.env.JAWSDB_URL
       },
     });
 
-// module.exports = sequelize;
+ module.exports = sequelize;
